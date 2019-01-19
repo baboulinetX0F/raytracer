@@ -20,6 +20,12 @@ public:
     inline vec3& operator+(const vec3& v2);
     inline vec3& operator*(const vec3& v2);
     inline vec3& operator*=(const vec3& v2);
+    inline vec3& operator/(const vec3& v2);
+    inline vec3& operator/=(const vec3& v2);
+    inline vec3& operator*(const float f);
+    inline vec3& operator/(const float f);
+    inline vec3& operator*=(const float f);
+    inline vec3& operator/=(const float f);
     inline vec3& operator-(const vec3& v2);
     inline vec3& operator-=(const vec3& v2);
 
@@ -54,7 +60,32 @@ inline vec3& vec3::operator-=(const vec3& v2)
     return vec3(x()-v2.x(), y()-v2.y(), z()-v2.z());
 }
 
-inline vec3& vec3::operator-(const vec3& v2)
+inline vec3& vec3::operator*(const float f)
 {
-    return vec3(x()-v2.x(), y()-v2.y(), z()-v2.z());
+    return vec3(x()*f, y()*f, z()*f);
+}
+
+inline vec3& vec3::operator*=(const float f)
+{
+    return vec3(x()*f, y()*f, z()*f);
+}
+
+inline vec3& vec3::operator/(const float f)
+{
+    return vec3(x()/f, y()/f, z()/f);
+}
+
+inline vec3& vec3::operator/=(const float f)
+{
+    return vec3(x()/f, y()/f, z()/f);
+}
+
+inline vec3& vec3::operator/(const vec3& v2)
+{
+    return vec3(x()/v2.x(), y()/v2.y(), z()/v2.z());
+}
+
+inline vec3& vec3::operator/=(const vec3& v2)
+{
+    return vec3(x()/v2.x(), y()/v2.y(), z()/v2.z());
 }
