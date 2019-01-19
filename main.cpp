@@ -13,12 +13,12 @@ int main(int argc, char** argv)
     {
         for(int x = 0; x < RENDER_WIDTH; x++)
         {
-            float r = float(x) / float(RENDER_WIDTH);
-            float g = float(y) / float(RENDER_HEIGHT);
-            float b = 0.2;
-            int ir = int(255.99*r);
-            int ig = int(255.99*g);
-            int ib = int(255.99*b);
+            // TODO : replace color values with a vec3 object
+            vec3 color = vec3(float(x) / float(RENDER_WIDTH), float(y)
+             / float(RENDER_HEIGHT), 0.2);
+            int ir = int(255.99*color.r());
+            int ig = int(255.99*color.g());
+            int ib = int(255.99*color.b());
             file << ir << " " << ig << " " << ib << "\n";
         }
     }
