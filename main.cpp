@@ -1,6 +1,6 @@
 #include <iostream>
 #include <fstream>
-#include "vec3.hpp"
+#include "ray.hpp"
 
 int main(int argc, char** argv)
 {
