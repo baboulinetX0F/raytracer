@@ -37,55 +37,88 @@ public:
 
 inline vec3& vec3::operator+=(const vec3& v2)
 {
-    return vec3(x()+v2.x(), y()+v2.y(), z()+v2.z());
+    e[0]+=v2.x();
+    e[1]+=v2.y();
+    e[2]+=v2.z();
+    return *this;
 }
 
 inline vec3& vec3::operator+(const vec3& v2)
 {
-    return vec3(x()+v2.x(), y()+v2.y(), z()+v2.z());
+    e[0]+=v2.x();
+    e[1]+=v2.y();
+    e[2]+=v2.z();
+    return *this;
 }
 
 inline vec3& vec3::operator*=(const vec3& v2)
 {
-    return vec3(x()*v2.x(), y()*v2.y(), z()*v2.z());
+    e[0]*=v2.x();
+    e[1]*=v2.y();
+    e[2]*=v2.z();
+    return *this;
 }
 
 inline vec3& vec3::operator*(const vec3& v2)
 {
-    return vec3(x()*v2.x(), y()*v2.y(), z()*v2.z());
+    e[0]*=v2.x();
+    e[1]*=v2.y();
+    e[2]*=v2.z();
+    return *this;
 }
 
 inline vec3& vec3::operator-=(const vec3& v2)
 {
-    return vec3(x()-v2.x(), y()-v2.y(), z()-v2.z());
+    e[0]-=v2.x();
+    e[1]-=v2.y();
+    e[2]-=v2.z();
+    return *this;
 }
 
 inline vec3& vec3::operator*(const float f)
 {
-    return vec3(x()*f, y()*f, z()*f);
+    e[0]*=f;
+    e[1]*=f;
+    e[2]*=f;
+    return *this;
 }
 
 inline vec3& vec3::operator*=(const float f)
 {
-    return vec3(x()*f, y()*f, z()*f);
+    e[0]*=f;
+    e[1]*=f;
+    e[2]*=f;
+    return *this;
 }
 
 inline vec3& vec3::operator/(const float f)
 {
-    return vec3(x()/f, y()/f, z()/f);
+    e[0]/=f;
+    e[1]/=f;
+    e[2]/=f;
+    return *this;
 }
 
 inline vec3& vec3::operator/=(const float f)
 {
-    return vec3(x()/f, y()/f, z()/f);
+    e[0]/=f;
+    e[1]/=f;
+    e[2]/=f;
+    return *this;
 }
 
 inline vec3& vec3::operator/(const vec3& v2)
 {
-    return vec3(x()/v2.x(), y()/v2.y(), z()/v2.z());
+    e[0]/=v2.x();
+    e[1]/=v2.y();
+    e[2]/=v2.z();
+    return *this;
 }
 
 inline vec3& vec3::operator/=(const vec3& v2)
 {
-    return vec3(x()/v2.x(), y()/v2.y(), z()/v2.z());
+    e[0]/=v2.x();
+    e[1]/=v2.y();
+    e[2]/=v2.z();
+    return *this;
 }
