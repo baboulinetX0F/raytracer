@@ -152,3 +152,8 @@ inline vec3 operator/(float f, const vec3& v)
 {
     return vec3(v.x() / f,v.y() / f,v.z() / f);
 }
+
+inline vec3 unit_vector(vec3 v)
+{
+    return v / v.length();
+}
