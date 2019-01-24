@@ -2,6 +2,12 @@
 #include <fstream>
 #include "ray.hpp"
 
+bool hit_sphere(const vec3& center, float radius, const ray& r)
+{
+    // TODO : Implement function hit_sphere
+    return false;
+}
+
 vec3 color(const ray& r)
 {
     vec3 unit_direction = unit_vector(r.direction());
