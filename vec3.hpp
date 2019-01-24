@@ -148,6 +148,11 @@ inline vec3 operator*(float f, const vec3& v)
     return vec3(v.x() * f,v.y() * f,v.z() * f);
 }
 
+inline vec3 operator*(const vec3& v, float f)
+{
+    return vec3(v.x() * f,v.y() * f,v.z() * f);
+}
+
 inline vec3 operator/(float f, const vec3& v)
 {
     return vec3(v.x() / f,v.y() / f,v.z() / f);
