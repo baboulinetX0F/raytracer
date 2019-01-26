@@ -2,29 +2,29 @@
 #include <fstream>
 #include "ray.hpp"
 
-bool hit_sphere(const vec3& center, float radius, const ray& r)
-{    
+// TODO : replace return value with nearest point
+float hit_sphere(const vec3& center, float radius, const ray& r) {
     vec3 oc = r.origin() - center;
     float a = dot(r.direction(), r.direction());
     float b = 2.0 * dot(oc, r.direction());
     float c = dot(oc, oc) - radius * radius;
     float discri = b*b - 4*a*c;
-    return (discri > 0);
+    return discri;
 }
 
-vec3 color(const ray& r)
-{
-    if (hit_sphere(vec3(0, 0,-1), 0.5, r))
+vec3 color(const ray& r) {
+    float t = hit_sphere(vec3(0, 0,-1), 0.5, r);
+    if (t > 0.0)
         return vec3(1.0, 0.0, 0.0);
     vec3 unit_direction = unit_vector(r.direction());
-    float t = 0.5 * (unit_direction.y()+1.0);
+    t = 0.5 * (unit_direction.y()+1.0);
     return (1.0-t)*vec3(1.0, 1.0, 1.0) + t*vec3(0.5, 0.7, 1.0);
 }
 
 int main(int argc, char** argv)
 {
-    const int RENDER_WIDTH = 800;
-    const int RENDER_HEIGHT = 600;
+    const int RENDER_WIDTH = 200;
+    const int RENDER_HEIGHT = 100;
     vec3 origin(0.0, 0.0, 0.0);
     vec3 vertical(0.0, 2.0, 0.0);
     vec3 horizontal(4.0, 0.0, 0.0);
