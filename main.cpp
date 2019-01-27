@@ -9,7 +9,14 @@ float hit_sphere(const vec3& center, float radius, const ray& r) {
     float b = 2.0 * dot(oc, r.direction());
     float c = dot(oc, oc) - radius * radius;
     float discri = b*b - 4*a*c;
-    return discri;
+    if (discri < 0)
+    {
+        return -1.0;
+    }
+    else
+    {
+        return (-b-sqrt(discri)) / (2.0*a);
+    }   
 }
 
 vec3 color(const ray& r) {
