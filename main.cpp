@@ -1,31 +1,20 @@
 #include <iostream>
 #include <fstream>
-#include "ray.hpp"
+#include "sphere.hpp"
 
-// TODO : replace return value with nearest point
-float hit_sphere(const vec3& center, float radius, const ray& r) {
-    vec3 oc = r.origin() - center;
-    float a = dot(r.direction(), r.direction());
-    float b = 2.0 * dot(oc, r.direction());
-    float c = dot(oc, oc) - radius * radius;
-    float discri = b*b - 4*a*c;
-    if (discri < 0)
-    {
-        return -1.0;
-    }
-    else
-    {
-        return (-b-sqrt(discri)) / (2.0*a);
-    }   
-}
+// TODO : Remove global variable after testing sphere class
+sphere s;
 
 vec3 color(const ray& r) {
-    float t = hit_sphere(vec3(0, 0,-1), 0.5, r);
-    if (t > 0.0)
+    hit_record hit;
+    bool t = s.hit(r, 0.0, 10000.0, hit);
+    if (t)
     {
-        vec3 N = unit_vector(r.point_at_parameter(t) - vec3(0,0,-1));
+        vec3 N = hit.normal;
         return 0.5 *vec3(N.x() + 1, N.y() + 1, N.z() + 1);
     }
+
+    // fake sky gradient backgrounc
     vec3 unit_direction = unit_vector(r.direction());
     t = 0.5 * (unit_direction.y()+1.0);
     return (1.0-t)*vec3(1.0, 1.0, 1.0) + t*vec3(0.5, 0.7, 1.0);
@@ -41,6 +30,7 @@ int main(int argc, char** argv)
     vec3 lower_left_corner(-2.0, -1.0, -1.0);
     std::ofstream file;
     file.open("output.ppm");
+    s = sphere(vec3(0, 0,-1), 0.5);
     file << "P3\n" << RENDER_WIDTH << " " << RENDER_HEIGHT << "\n255\n";
     for(int y = RENDER_HEIGHT - 1; y >= 0; y--)
     {
