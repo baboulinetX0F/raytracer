@@ -1,3 +1,5 @@
+#ifndef VEC3H
+#define VEC3H
 #include <math.h>
 #include <stdlib.h>
 #include <iostream>
@@ -142,3 +144,5 @@ inline float dot(const vec3& v1, const vec3& v2)
 {
     return v1.e[0] * v2.e[0] + v1.e[1] * v2.e[1] + v1.e[2] * v2.e[2];
 }
+
+#endif
