@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <random>
 #include "sphere.hpp"
 #include "hitable_list.hpp"
 
@@ -17,10 +18,19 @@ vec3 color(const ray& r, hitable* world) {
     return (1.0-t)*vec3(1.0, 1.0, 1.0) + t*vec3(0.5, 0.7, 1.0);
 }
 
+float rand_mt19937()
+{
+    std::random_device rd;  //Will be used to obtain a seed for the random number engine
+    std::mt19937 gen(rd()); //Standard mersenne_twister_engine seeded with rd()
+    std::uniform_real_distribution<> dis(0.0, 1.0);
+    return dis(gen);
+}
+
 int main(int argc, char** argv)
 {
     const int RENDER_WIDTH = 200;
     const int RENDER_HEIGHT = 100;
+    const int SAMPLE_NUMBER = 100;
     vec3 origin(0.0, 0.0, 0.0);
     vec3 vertical(0.0, 2.0, 0.0);
     vec3 horizontal(4.0, 0.0, 0.0);
@@ -36,10 +46,15 @@ int main(int argc, char** argv)
     {
         for(int x = 0; x < RENDER_WIDTH; x++)
         {            
-            float u = float(x) / float(RENDER_WIDTH);
-            float v = float(y) / float(RENDER_HEIGHT);
-            ray r(origin, lower_left_corner + u*horizontal + v*vertical);
-            vec3 col = color(r, world);
+            vec3 col = vec3(0.0, 0.0, 0.0);
+            for (int s=0; s<SAMPLE_NUMBER; s++)
+            {
+                float u = float(x + rand_mt19937()) / float(RENDER_WIDTH);
+                float v = float(y + rand_mt19937()) / float(RENDER_HEIGHT);
+                ray r(origin, lower_left_corner + u*horizontal + v*vertical);
+                col += color(r, world);
+            }
+            col /= SAMPLE_NUMBER;
             int ir = int(255.99*col.r());
             int ig = int(255.99*col.g());
             int ib = int(255.99*col.b());
