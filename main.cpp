@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include "rand.hpp"
+#include "lambertian.hpp"
 #include "sphere.hpp"
 #include "hitable_list.hpp"
 
@@ -10,13 +11,26 @@ vec3 color(const ray& r, hitable* world) {
     {
         // vec3 N = hit.normal;
         // return 0.5 *vec3(N.x() + 1, N.y() + 1, N.z() + 1);
-        vec3 target = hit.p + hit.normal + random_in_unit_sphere();
-        return 0.5*color(ray(hit.p, target-hit.p), world);
+        //vec3 target = hit.p + hit.normal + random_in_unit_sphere();
+        //return 0.5*color(ray(hit.p, target-hit.p), world);
+		vec3 attenuation;
+		ray scattered;
+		if (hit.mat_ptr->scatter(r, hit, attenuation, scattered))
+		{
+			return attenuation * color(scattered, world);
+		}
+		else
+		{
+			return vec3(0.0, 0.0, 0.0);
+		}
     }
-    // fake sky gradient backgrounc
-    vec3 unit_direction = unit_vector(r.direction());
-    float t = 0.5 * (unit_direction.y()+1.0);
-    return (1.0-t)*vec3(1.0, 1.0, 1.0) + t*vec3(0.5, 0.7, 1.0);
+	else
+	{
+		// fake sky gradient backgrounc
+		vec3 unit_direction = unit_vector(r.direction());
+		float t = 0.5 * (unit_direction.y() + 1.0);
+		return (1.0 - t)*vec3(1.0, 1.0, 1.0) + t * vec3(0.5, 0.7, 1.0);
+	}
 }
 
 int main(int argc, char** argv)
@@ -31,8 +45,8 @@ int main(int argc, char** argv)
     std::ofstream file;
     file.open("output.ppm");
     hitable* list[2];
-    list[0] = new sphere(vec3(0, 0,-1), 0.5);
-    list[1] = new sphere(vec3(0, -100.5,-1), 100);
+    list[0] = new sphere(vec3(0, 0,-1), 0.5, new lambertian(vec3(0.8, 0.1, 0.0)));
+    list[1] = new sphere(vec3(0, -100.5,-1), 100, new lambertian(vec3(0.0, 0.15, 0.8)));
     hitable* world = new hitable_list(list, 2);
     file << "P3\n" << RENDER_WIDTH << " " << RENDER_HEIGHT << "\n255\n";
     for(int y = RENDER_HEIGHT - 1; y >= 0; y--)

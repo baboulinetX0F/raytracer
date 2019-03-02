@@ -1,3 +1,11 @@
 *.obj
 *.exe
 *.ppm
+
+Debug/
+
+raytracer_vs\.vcxproj
+
+raytracer_vs\.vcxproj\.filters
+
+raytracer_vs\.vcxproj\.user
