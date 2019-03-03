@@ -48,7 +48,7 @@ int main(int argc, char** argv)
     hitable* list[3];
     list[0] = new sphere(vec3(0, 0,-1), 0.5, new lambertian(vec3(0.8, 0.1, 0.0)));	
     list[1] = new sphere(vec3(0, -100.5,-1), 100, new lambertian(vec3(0.0, 0.15, 0.8)));
-	list[2] = new sphere(vec3(1, 0, -1), 0.5, new metal(vec3(0.0, 0.8, 0.1)));
+	list[2] = new sphere(vec3(1, 0, -1), 0.5, new metal(vec3(0.0, 0.8, 0.1), 0.2));
     hitable* world = new hitable_list(list, 3);
     file << "P3\n" << RENDER_WIDTH << " " << RENDER_HEIGHT << "\n255\n";
     for(int y = RENDER_HEIGHT - 1; y >= 0; y--)
