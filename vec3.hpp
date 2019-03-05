@@ -1,6 +1,7 @@
 #ifndef VEC3H
 #define VEC3H
-#include <math.h>
+
+#include <cmath>
 #include <stdlib.h>
 #include <iostream>
 
