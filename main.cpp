@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <cfloat>
 #include "rand.hpp"
 #include "camera.hpp"
 #include "lambertian.hpp"
@@ -10,7 +11,7 @@
 
 vec3 color(const ray& r, hitable* world, int depth) {
     hit_record hit;
-    if (world->hit(r, 0.00001, 10000.0, hit))
+    if (world->hit(r, 0.001, FLT_MAX, hit))
     {
         // vec3 N = hit.normal;
         // return 0.5 *vec3(N.x() + 1, N.y() + 1, N.z() + 1);
@@ -47,14 +48,12 @@ int main(int argc, char** argv)
     //vec3 lower_left_corner(-2.0, -1.0, -1.0);
     std::ofstream file;
     file.open("output.ppm");
-	camera cam = camera(90.0, RENDER_WIDTH / RENDER_HEIGHT);
-    hitable* list[5];
-    list[0] = new sphere(vec3(0, 0,-1), 0.5, new lambertian(vec3(0.8, 0.1, 0.0)));	
-    list[1] = new sphere(vec3(0, -100.5,-1), 100, new lambertian(vec3(0.0, 0.15, 0.8)));
-	list[2] = new sphere(vec3(1, 0, -1), 0.5, new metal(vec3(0.0, 0.8, 0.1), 0.2));
-	list[3] = new sphere(vec3(-1, 0, -1), 0.5, new dielectric(1.5));
-	list[4] = new sphere(vec3(-1, 0, -1), -0.45, new dielectric(1.5));
-    hitable* world = new hitable_list(list, 5);
+	camera cam = camera(vec3(-2.0, 2.0, 1), vec3(0,0,-1), vec3(0,1,0), 90.0, RENDER_WIDTH / RENDER_HEIGHT);
+    hitable* list[2];
+	float R = cos(M_PI / 4);
+    list[0] = new sphere(vec3(-R, 0,-1), R, new lambertian(vec3(0.8, 0.1, 0.0)));	
+    list[1] = new sphere(vec3(R, 0,-1), R, new lambertian(vec3(1, 0, 0)));
+	hitable* world = new hitable_list(list, 2);
     file << "P3\n" << RENDER_WIDTH << " " << RENDER_HEIGHT << "\n255\n";
     for(int y = RENDER_HEIGHT - 1; y >= 0; y--)
     {
