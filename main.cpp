@@ -42,13 +42,9 @@ int main(int argc, char** argv)
 	const int RENDER_WIDTH = 200;
     const int RENDER_HEIGHT = 100;
     const int SAMPLE_NUMBER = 10;
-    //vec3 origin(0.0, 0.0, 0.0);
-    //vec3 vertical(0.0, 2.0, 0.0);
-    //vec3 horizontal(4.0, 0.0, 0.0);
-    //vec3 lower_left_corner(-2.0, -1.0, -1.0);
     std::ofstream file;
     file.open("output.ppm");
-	camera cam = camera(vec3(-2.0, 2.0, 1), vec3(0,0,-1), vec3(0,1,0), 90.0, RENDER_WIDTH / RENDER_HEIGHT);
+	camera cam = camera(vec3(-2.0, 2.0, 1), vec3(0,0,-1), vec3(0,1,0), 90.0, (float)RENDER_WIDTH / (float)RENDER_HEIGHT);
     hitable* list[2];
 	float R = cos(M_PI / 4);
     list[0] = new sphere(vec3(-R, 0,-1), R, new lambertian(vec3(0.8, 0.1, 0.0)));	
@@ -64,7 +60,6 @@ int main(int argc, char** argv)
             {
                 float u = float(x + rand_mt19937()) / float(RENDER_WIDTH);
                 float v = float(y + rand_mt19937()) / float(RENDER_HEIGHT);
-                //ray r(origin, lower_left_corner + u*horizontal + v*vertical);
 				ray r = cam.get_ray(u, v);
                 col += color(r, world, 0);
             }
